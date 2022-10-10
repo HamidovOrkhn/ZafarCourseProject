@@ -1,0 +1,118 @@
+﻿@model List<ZafarCoursesWebApp.Areas.Admin.Models.Service>
+
+
+@{ Layout = "~/Views/Shared/_Layout1.cshtml"; }
+
+<section class="page__title-area page__title-height page__title-overlay d-flex align-items-center" href="/assets/img/page-title/page-title.jpg" style="background-image: url(@Href("~/assets/img/page-title/page-title.jpg")">
+    <div class="container">
+        <div class="row">
+            <div class="col-xxl-12">
+                <div class="page__title-wrapper mt-110">
+                    <h3 class="page__title">Kurslarımız</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Ana Səhifə</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Kurslar</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="course__area pt-120 pb-120">
+    <div class="container">
+        <div class="course__tab-inner grey-bg-2 mb-50">
+            <div class="row align-items-center">
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                    <div class="course__tab-wrapper d-flex align-items-center">
+                        <div class="course__tab-btn">
+                            <ul class="nav nav-tabs" id="courseTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="grid-tab" data-bs-toggle="tab" data-bs-target="#grid" type="button" role="tab" aria-controls="grid" aria-selected="true">
+                                        <svg class="grid" viewBox="0 0 24 24" style="position: relative; height: 0px;">
+                                            <rect x="3" y="3" class="st0" width="7" height="7"></rect>
+                                            <rect x="14" y="3" class="st0" width="7" height="7"></rect>
+                                            <rect x="14" y="14" class="st0" width="7" height="7"></rect>
+                                            <rect x="3" y="14" class="st0" width="7" height="7"></rect>
+                                        </svg>
+                                    </button>
+                                </li>
+                                @*<li class="nav-item" role="presentation">
+                                        <button class="nav-link list" id="list-tab" data-bs-toggle="tab" data-bs-target="#list" type="button" role="tab" aria-controls="list" aria-selected="false">
+                                            <svg class="list" viewBox="0 0 512 512">
+                                                <g id="Layer_2_1_">
+                                                    <path class="st0" d="M448,69H192c-17.7,0-32,13.9-32,31s14.3,31,32,31h256c17.7,0,32-13.9,32-31S465.7,69,448,69z"></path>
+                                                    <circle class="st0" cx="64" cy="100" r="31"></circle>
+                                                    <path class="st0" d="M448,225H192c-17.7,0-32,13.9-32,31s14.3,31,32,31h256c17.7,0,32-13.9,32-31S465.7,225,448,225z"></path>
+                                                    <circle class="st0" cx="64" cy="256" r="31"></circle>
+                                                    <path class="st0" d="M448,381H192c-17.7,0-32,13.9-32,31s14.3,31,32,31h256c17.7,0,32-13.9,32-31S465.7,381,448,381z"></path>
+                                                    <circle class="st0" cx="64" cy="412" r="31"></circle>
+                                                </g>
+                                            </svg>
+                                        </button>
+                                    </li>*@
+                            </ul>
+                        </div>
+                        <div class="course__view">
+                            <h4>Kurs Sayı @Model.Count</h4>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xxl-12">
+                <div class="course__tab-conent">
+                    <div class="tab-content" id="courseTabContent">
+                        <div class="tab-pane fade show active" id="grid" role="tabpanel" aria-labelledby="grid-tab">
+                            <div class="row">
+                                @foreach (var item in Model)
+                                {
+                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
+                        <div class="course__item white-bg mb-30 fix">
+                            <div class="course__thumb w-img p-relative fix" style="max-height:223px;">
+                                <a asp-action="Details" asp-controller="Services" asp-route-id="@item.Id">
+                                    <img src="~/uploads/@item.ServicePicture" alt="">
+                                </a>
+                                <div class="course__tag">
+                                    <a href="#">@item.Name</a>
+                                </div>
+                            </div>
+                            <div class="course__content">
+                                <div class="course__meta d-flex align-items-center justify-content-between">
+                                    <div class="course__lesson">
+                                        <span><i class="far fa-book-alt"></i>@item.ServiceInfo.LectureCount Dərs</span>
+                                    </div>
+                                </div>
+                                <h3 class="course__title"><a asp-action="Details" asp-controller="Services" asp-route-id="@item.Id">@item.ServiceInfo.Header</a></h3>
+                                <div class="course__teacher d-flex align-items-center">
+                                    <div class="course__teacher-thumb mr-15">
+                                        @{ var teacher = item.Teachers.FirstOrDefault(); }
+                                        <img src="~/uploads/@teacher.PictureSource" alt="">
+                                    </div>
+                                    <h6><a>@teacher.Name @teacher.Surname</a></h6>
+                                </div>
+                            </div>
+                            <div class="course__more d-flex justify-content-between align-items-center">
+                                <div class="course__btn">
+                                    <a asp-action="Details" asp-controller="Services" asp-route-id="@item.Id" class="link-btn">
+                                        Detallar
+                                        <i class="far fa-arrow-right"></i>
+                                        <i class="far fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

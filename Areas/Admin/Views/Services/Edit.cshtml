@@ -1,0 +1,295 @@
+﻿@model ZafarCoursesWebApp.Areas.Admin.ViewModels.EditServiceViewModel
+
+
+@{
+    ViewData["Title"] = "Servis məlumatlarını dəyiş";
+    Layout = "_LayoutAdmin";
+}
+<style>
+    input.input-validation-error,
+    textarea.input-validation-error,
+    select.input-validation-error {
+        background: #FEF1EC;
+        border: 1px solid #CD0A0A;
+    }
+</style>
+<h1>Dəyiş</h1>
+
+<h4>Servis məlumatlarını dəyiş</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8 m-auto">
+        <form asp-action="Edit" asp-controller="Services" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h3>
+                Xidmətlər
+            </h3>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" value="@Model.Services.Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Header" class="control-label"></label>
+                <input asp-for="Header" value="@Model.Services.ServiceInfo.Header" class="form-control" />
+                <span asp-validation-for="Header" class="text-danger"></span>
+            </div>
+            <div class="row mb-3">
+                <div class="col-lg-8">
+                    <div class="wrapper">
+                        <div class="upload-container">
+                            <div class="border-container">
+                                <div class="icons fa-4x">
+                                    <i class="fas fa-file-image" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+                                    <i class="fas fa-file-alt" data-fa-transform="shrink-2 up-4"></i>
+                                    <i class="fas fa-file-pdf" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
+                                </div>
+                                <input type="file" asp-for="ServicePicture" class="form-control" />
+                                <span asp-validation-for="ServicePicture" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 pt-xl-4">
+                    <img class="rounded" style=" max-width: 100%; height: auto;" src="~/uploads/@Model.Services.ServicePicture" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Body" class="control-label"></label>
+                @*<textarea id="bodyarticle" asp-for="Body" class="form-control">@Model.Services.ServiceInfo.Body</textarea>*@
+                @Html.TextArea("Body", @Model.Services.ServiceInfo.Body, new { @Value = @Model.Services.ServiceInfo.Body, @class = "form-control", @name = "Body" })
+                @Html.ValidationMessageFor(model => model.Body)
+                @*<span asp-validation-for="Body" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="LectureCount" class="control-label">Həftədə dərs sayı</label>
+                <input asp-for="LectureCount" value="@Model.Services.ServiceInfo.LectureCount" class="form-control" />
+                <span asp-validation-for="LectureCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LectureHour" class="control-label">Cəmi saat</label>
+                <input asp-for="LectureHour" value="@Model.Services.ServiceInfo.LectureHour" class="form-control" />
+                <span asp-validation-for="LectureHour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WeekCount" class="control-label">Həftə sayı</label>
+                <input asp-for="WeekCount" value="@Model.Services.ServiceInfo.WeekCount" class="form-control" />
+                <span asp-validation-for="WeekCount" class="text-danger"></span>
+            </div>
+            <h3>
+                Müəllimlər
+            </h3>
+            <div class="form-group">
+                <label class="control-label">Müəllim sayı</label>
+                <input type="number" required min="1" value="@Model.Services.Teachers.Count" class="form-control" id="teacher-count" placeholder="Müəllim sayı" />
+            </div>
+            <div class="teachers">
+                @if (Model.Services.Teachers.Count > 0)
+                {
+        @for (int i = 0; i < Model.Services.Teachers.Count; i++)
+        {
+        <div class='form-group'>
+            <label class='control-label'>Müəllimin @(i+1) adı</label>
+            <input type='text' required class='form-control' name='Names' value="@Model.Services.Teachers[i].Name" placeholder='Müəllimin adı' />
+        </div>
+                            <div class='form-group'>
+                                <label class='control-label'>Müəllimin @(i+1) soyadı</label>
+                                <input type='text' required class='form-control' name='Surnames' value="@Model.Services.Teachers[i].Surname" placeholder='Müəllimin soyadı' />
+                            </div>
+                                                <label class="control-label">Kateqorya</label>
+                                                                    <select class="form-control" name="CategoryIds" required>
+                                                                        @if (Model.Services.Teachers[i].CategoryId == 1)
+                                                                        {
+                                                    <option value="1" selected>Programçı</option>
+                                                                            <option value="2">Dizayner</option>
+ }
+                                                                        else if (Model.Services.Teachers[i].CategoryId == 2)
+                                                                        {
+                                                    <option value="1">Programçı</option>
+                                                                            <option value="2" selected>Dizayner</option>
+ }
+                                                                        else
+                                                                        {
+                                                    <option value="1">Programçı</option>
+                                                                            <option value="2">Dizayner</option>
+}
+
+
+                                                                    </select>
+                                                                                        <div class="form-group row">
+                                                                                            <div class=" form-group col-lg-8">
+                                                                                                <div class="wrapper">
+                                                                                                    <div class="upload-container">
+                                                                                                        <div class="border-container">
+                                                                                                            <div class="icons fa-4x">
+                                                                                                                <i class="fas fa-file-image" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+                                                                                                                <i class="fas fa-file-alt" data-fa-transform="shrink-2 up-4"></i>
+                                                                                                                <i class="fas fa-file-pdf" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
+                                                                                                            </div>
+                                                                                                            <label class='control-label'>Müəllimin @(i+1)-ci şəkli</label>
+                                                                                                            <input type='file' class='form-control teacher-picture' id="@(i)" name='TeacherPictures' placeholder='Müəllimin şəkli' />
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-lg-4 pt-xl-4">
+                                                                                                <img class="rounded" style=" max-width: 100%; height: auto;" src="~/uploads/@Model.Services.Teachers[i].PictureSource" />
+                                                                                            </div>
+                                                                                        </div>}}
+                }
+                }
+            </div>
+            <h3>
+                Sillabus
+            </h3>
+            <div class="form-group">
+                <label class="control-label">Sillabus sayı</label>
+                <input type="number" required min="1" class="form-control" id="question-count" value="@Model.Services.Lectures.Count" placeholder="Sillabus sayı" />
+            </div>
+
+            <div class="changedpictures"></div>
+            <div class="questions">
+                @if (Model.Services.Lectures.Count > 0)
+                {
+                    for (int i = 0; i < Model.Services.Lectures.Count; i++)
+                    {
+        <div class='form-group'>
+            <label class='control-label'>Sillabusun @(i+1)  adı</label>
+            <input type='text' required class='form-control' value="@Model.Services.Lectures[i].Name" name='Questions' placeholder='Sillabusun @(i+1) adı' />
+        </div>
+                            <div class='form-group'>
+                                <label class='control-label'>Sillabusun @(i+1) dərsləri</label>
+                                <input type='number' min="1" id="@i" value="@Model.Services.Lectures[i].LectureParticles.Count" required class='form-control question-count-stepp' placeholder='Dərs sayı' />
+                            </div>
+                                                <div class="questionstep@(i)">
+                                                    @if (Model.Services.Lectures[i].LectureParticles.Count > 0)
+                                                    {
+                                @for (int s = 0; s < Model.Services.Lectures[i].LectureParticles.Count; s++)
+                                {
+        <div class='form-group col-8'>
+            <label class='control-label'>Dərs @(s+1)  adı</label>
+            <input type='text' required class='form-control' value="@Model.Services.Lectures[i].LectureParticles[s].Name" name='QuestionStepps' placeholder='Dərs @(s+1) adı' />
+            <input type='hidden' value="@(i)" name='SteppOrders' />
+
+        </div>}}
+                                                </div>}
+                                        }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Yarat" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Geri Qayıt</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        CKEDITOR.replace("Body");
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(".teacher-picture").change(function () {
+                var id = $(this).prop('id')
+                $('.changedpictures').append("<input type='hidden' value=" + (parseInt(id)) + " name='PictureIndexes'/>");
+
+            })
+            var changedTeacher = false;
+            var changedQuestion = false;
+            var changedParticle = false;
+            $("#teacher-count").bind('keyup mouseup', function () {
+                if (parseInt($(this).val()) != @(Model.Services.Teachers.Count) || changedTeacher) {
+                    $(".teachers").empty();
+                    changedTeacher = true;
+                    var str = [];
+                    for (var i = 1; i <= parseInt($(this).val()); i++) {
+                        var stradd = "<div class='form-group'>" +
+                            "<label class='control-label'>Müəllimin " + i + " adı</label>" +
+                            "<input type='text' required class='form-control' name='Names' placeholder='Müəllimin adı' />" +
+                            "</div>"
+                        var strsoyad = "<div class='form-group'>" +
+                            "<label class='control-label'>Müəllimin " + i + " soyadı</label>" +
+                            "<input type='text' required class='form-control' name='Surnames' placeholder='Müəllimin soyadı' />" +
+                            "</div>"
+                        var strCategory = `<label class="control-label">Kateqorya</label>
+                                            <select class="form-control" name="CategoryIds" required >
+                                               <option value="1">Programçı</option>
+                                               <option value="2">Dizayner</option>
+                                            </select >`;
+                        var strfile = "<div class='form-group'>" +
+                            "<label class='control-label'>Müəllimin " + i + " şəkli</label>" +
+                            "<input type='file' class='form-control' name='TeacherPictures' placeholder='Müəllimin şəkli' />" +
+                            "</div>"
+                        str.push(stradd);
+                        str.push(strsoyad);
+                        str.push(strCategory);
+                        str.push(strfile)
+                    }
+                    $(".teachers").append(str)
+                }
+
+            });
+
+            $("#question-count").bind('keyup mouseup', function () {
+                if (parseInt($(this).val()) != @(Model.Services.Lectures.Count) || changedQuestion) {
+                    $(".questions").empty();
+                    var str = [];
+                    for (var i = 1; i <= parseInt($(this).val()); i++) {
+                        var stradd = "<div class='form-group'>" +
+                            "<label class='control-label'>Sillabusun " + i + " adı</label>" +
+                            "<input type='text' required class='form-control' name='Questions' placeholder='Sillabusun adı' />" +
+                            "</div>"
+                        var straddinput = "<div class='form-group'>" +
+                            "<label class='control-label'>Sillabusun " + i + " dərsləri</label>" +
+                            "<input type='number' required min='1' id=" + i + " required class='form-control question-count-stepp' placeholder='Dərs sayı' />" +
+                            "</div>" +
+                            "<div class='questionstep" + i + "'></div>"
+                        str.push(stradd);
+                        str.push(straddinput);
+                    }
+                    $('.questions').append(str)
+                    $('.question-count-stepp').bind('keyup mouseup', function () {
+                        var id = $(this).prop('id');
+                        $(".questionstep" + id).empty();
+                        var str = [];
+                        for (var i = 1; i <= parseInt($(this).val()); i++) {
+                            //if ($(".questionstep"+i)) {
+                            //    i += 1;
+                            //}
+                            var stradd = "<div class='form-group col-8'>" +
+                                "<label class='control-label'>Dərs " + i + " adı</label>" +
+                                "<input type='text' required min='1' class='form-control' name='QuestionStepps' placeholder='Dərs adı' />" +
+                                "<input type='hidden' value=" + (parseInt(id)) + " name='SteppOrders'/>" +
+                                "</div>"
+                            str.push(stradd);
+                        }
+                        $(".questionstep" + id).append(str)
+                    })
+                }
+
+            });
+            $('.question-count-stepp').bind('keyup mouseup', function () {
+                var id = $(this).prop('id');
+                $(".questionstep" + id).empty();
+                var str = [];
+                for (var i = 1; i <= parseInt($(this).val()); i++) {
+                    //if ($(".questionstep"+i)) {
+                    //    i += 1;
+                    //}
+                    var stradd = "<div class='form-group col-8'>" +
+                        "<label class='control-label'>Dərs " + i + " adı</label>" +
+                        "<input type='text' required class='form-control' name='QuestionStepps' placeholder='Dərs adı' />" +
+                        "<input type='hidden' value=" + (parseInt(id)) + " name='SteppOrders'/>" +
+                        "</div>"
+                    str.push(stradd);
+                }
+                $(".questionstep" + id).append(str)
+            })
+
+        })
+    </script>
+}

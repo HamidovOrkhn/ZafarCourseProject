@@ -1,0 +1,6 @@
+﻿@model List<ZafarCoursesWebApp.Areas.Admin.Models.Service>
+
+@foreach (var item in Model)
+{
+    <li><a asp-action="Details" asp-controller="Services" asp-route-id="@item.Id"  >@Html.DisplayFor(modelItem => item.Name)</a></li>
+}

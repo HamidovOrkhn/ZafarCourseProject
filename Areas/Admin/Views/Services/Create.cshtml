@@ -1,0 +1,197 @@
+﻿@model ZafarCoursesWebApp.Areas.Admin.ViewModels.CreateServiceViewModel
+
+@{ ViewData["Title"] = "Yeni servis əlavə et";
+                Layout = "_LayoutAdmin"; }
+<style>
+    input.input-validation-error,
+    textarea.input-validation-error,
+    select.input-validation-error {
+        background: #FEF1EC;
+        border: 1px solid #CD0A0A;
+    }
+</style>
+<h1>Əlavə Et</h1>
+
+<h4>Yeni Xidmət</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8 m-auto">
+        <form asp-action="Create" asp-controller="Services" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h3>
+                Xidmətlər
+            </h3>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" required="required" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Header" class="control-label"></label>
+                <input asp-for="Header" class="form-control" required="required" />
+                <span asp-validation-for="Header" class="text-danger"></span>
+            </div>
+            <div class="row mb-3">
+                <div class="col-lg-8">
+                    <div class="wrapper">
+                        <div class="upload-container">
+                            <div class="border-container">
+                                <div class="icons fa-4x">
+                                    <i class="fas fa-file-image" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+                                    <i class="fas fa-file-alt" data-fa-transform="shrink-2 up-4"></i>
+                                    <i class="fas fa-file-pdf" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
+                                </div>
+                                <input type="file" asp-for="ServicePicture" class="form-control" />
+                                <span asp-validation-for="ServicePicture" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 pt-xl-4">
+                    <img class="image-preview img-fluid" />
+                </div>
+            </div>
+                <div class="form-group">
+                    <label asp-for="Body" class="control-label"></label>
+                    <textarea id="bodyarticle" asp-for="Body" class="form-control"></textarea>
+                    <span asp-validation-for="Body" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LectureCount" class="control-label">Həftədə dərs sayı</label>
+                    <input asp-for="LectureCount" class="form-control" />
+                    <span asp-validation-for="LectureCount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LectureHour" class="control-label">Cəmi saat</label>
+                    <input asp-for="LectureHour" class="form-control" />
+                    <span asp-validation-for="LectureHour" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="WeekCount" class="control-label">Həftə sayı</label>
+                    <input asp-for="WeekCount" class="form-control" />
+                    <span asp-validation-for="WeekCount" class="text-danger"></span>
+                </div>
+                <h3>
+                    Müəllimlər
+                </h3>
+                <div class="form-group">
+                    <label class="control-label">Müəllim sayı</label>
+                    <input type="number" required min="1" class="form-control" id="teacher-count" placeholder="Müəllim sayı" />
+                </div>
+                <div class="teachers">
+
+
+                </div>
+                <h3>
+                    Sillabus
+                </h3>
+                <div class="form-group">
+                    <label class="control-label">Sillabus sayı</label>
+                    <input type="number" required min="1" class="form-control" id="question-count" placeholder="Sillabus sayı" />
+                </div>
+
+
+                <div class="questions">
+
+
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Yarat" class="btn btn-primary" />
+                </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Geri Qayıt</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/upload.js"></script>
+    <script>
+        CKEDITOR.replace("bodyarticle");
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            $("#ServicePicture").change(function () {
+
+                var file = this.files[0]
+
+                var fileReader = new FileReader();
+
+                fileReader.onload = function (e) {
+                    $(".image-preview").attr("src", e.target.result);
+                };
+                fileReader.readAsDataURL(file, "UTF-8");
+            });
+            $("#teacher-count").bind('keyup mouseup', function () {
+
+                $(".teachers").empty();
+                var str = [];
+                for (var i = 1; i <= parseInt($(this).val()); i++) {
+                    var stradd = "<div class='form-group'>" +
+                        "<label class='control-label'>Müəllimin " + i + " adı</label>" +
+                        "<input type='text' required class='form-control' name='Names' placeholder='Müəllimin adı' />" +
+                        "</div>"
+                    var strsoyad = "<div class='form-group'>" +
+                        "<label class='control-label'>Müəllimin " + i + " soyadı</label>" +
+                        "<input type='text' required class='form-control' name='Surnames' placeholder='Müəllimin soyadı' />" +
+                        "</div>"
+                    var strCategory = `<label class="control-label">Kateqorya</label>
+                                <select class="form-control" name="CategoryIds" required >
+                                   <option value="1">Programçı</option>
+                                   <option value="2">Dizayner</option>
+                                </select >`;
+                    var strfile = "<div class='form-group'>" +
+                        "<label class='control-label'>Müəllimin " + i + " şəkli</label>" +
+                        "<input type='file' required class='form-control' name='TeacherPictures' placeholder='Müəllimin şəkli' />" +
+                        "</div>"
+                    str.push(stradd);
+                    str.push(strsoyad);
+                    str.push(strCategory);
+                    str.push(strfile)
+                }
+                $(".teachers").append(str)
+            });
+
+            $("#question-count").bind('keyup mouseup', function () {
+
+                $(".questions").empty();
+                var str = [];
+                for (var i = 1; i <= parseInt($(this).val()); i++) {
+                    var stradd = "<div class='form-group'>" +
+                        "<label class='control-label'>Sillabusun " + i + " adı</label>" +
+                        "<input type='text' required class='form-control' name='Questions' placeholder='Sillabusun adı' />" +
+                        "</div>"
+                    var straddinput = "<div class='form-group'>" +
+                        "<label class='control-label'>Sillabusun " + i + " dərsləri</label>" +
+                        "<input type='number' id=" + i + " min='1' required class='form-control question-count-stepp' placeholder='Dərs sayı' />" +
+                        "</div>" +
+                        "<div class='questionstep" + i + "'></div>"
+                    str.push(stradd);
+                    str.push(straddinput);
+                }
+                $('.questions').append(str)
+                $('.question-count-stepp').bind('keyup mouseup', function () {
+                    var id = $(this).prop('id');
+                    $(".questionstep" + id).empty();
+                    var str = [];
+                    for (var i = 1; i <= parseInt($(this).val()); i++) {
+                        var stradd = "<div class='form-group col-8'>" +
+                            "<label class='control-label'>Dərs " + i + " adı</label>" +
+                            "<input type='text' required class='form-control' name='QuestionStepps' placeholder='Dərs adı' />" +
+                            "<input type='hidden' value=" + (parseInt(id) - 1) + " name='SteppOrders'/>" +
+                            "</div>"
+                        str.push(stradd);
+                    }
+                    $(".questionstep" + id).append(str)
+                })
+
+            });
+
+        })
+    </script>
+}

@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "_Layout";
+ }
+
+<section class="error__area pt-200 pb-200">
+    <div class="container">
+        <div class="row">
+            <div class="col-xxl-8 offset-xxl-2 col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+                <div class="error__item text-center">s
+                    <div class="error__thumb mb-45">
+                        <img src="~/assets/img/error/error.png" alt="">
+                    </div>
+                    <div class="error__content">
+                        <h3 class="error__title">@ViewData["ErrorHead"]</h3>
+                        <p>@ViewData["ErrorMessage"]</p>
+                        <a href="@ViewData["BackLink"]" class="e-btn e-btn-3 e-btn-4">Ana Səhifəyə Qayıt</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

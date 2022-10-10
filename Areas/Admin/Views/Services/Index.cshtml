@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ZafarCoursesWebApp.Areas.Admin.Models.Service>
+
+@{
+    ViewData["Title"] = "Xidmətlər";
+    Layout = "_LayoutAdmin";
+}
+
+<h1>Xidmətlər</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Əlavə Et</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-controller="Services" asp-area="Admin" asp-route-id="@item.Id">Dəyiş</a> |
+                    <a asp-action="Delete" asp-controller="Services" asp-area="Admin" asp-route-id="@item.Id">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts{
+    @if (TempData["ServiceSuccess"] is object)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: "@(TempData["ServiceSuccess"])"
+
+            })
+        </script>
+
+    }
+    @if (TempData["ServiceErrorAdd"] is object)
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: "@(TempData["ServiceErrorAdd"])"
+
+            })
+        </script>
+
+    }
+    @if (TempData["ServiceSuccessDelete"] is object)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: "@(TempData["ServiceSuccessDelete"])"
+
+            })
+        </script>
+
+    }
+    @if (TempData["ServiceSuccessUpdate"] is object)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: "@(TempData["ServiceSuccessUpdate"])"
+
+            })
+        </script>
+
+    }
+
+
+}

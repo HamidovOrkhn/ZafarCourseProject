@@ -1,0 +1,17 @@
+﻿@model List<ZafarCoursesWebApp.Areas.Admin.Models.Service>
+
+@foreach (var item in Model)
+	{
+<li>
+    <div class="course__sm d-flex align-items-center mb-30">
+        <div class="course__sm-thumb mr-20">
+            <a href="#">
+                <img src="~/uploads/@item.ServicePicture" alt="">
+            </a>
+        </div>
+        <div class="course__sm-content">
+            <h5><a href="#">@item.Name</a></h5>
+        </div>
+    </div>
+</li>
+	}

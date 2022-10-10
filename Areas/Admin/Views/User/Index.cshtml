@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ZafarCoursesWebApp.Areas.Admin.Models.User>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_LayoutAdmin";
+}
+
+<h1>İstifadəçilər</h1>
+
+<p>
+    <a class="btn btn-outline-primary" asp-action="Create">Yeni istifadəçi</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                İstifadəçi adı
+            </th>
+            <th>
+                Ad
+            </th>
+            <th>
+                Soyad
+            </th>
+            <th>
+                E-Poçt
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                    <a asp-action="Delete" asp-route-id="@item.Id">İstifadəçini sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts{
+    @if (TempData["SuccessUserCreate"] is object)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: "@(TempData["SuccessUserCreate"])"
+
+            })
+        </script>
+
+    }
+    @if (TempData["SuccessUserDelete"] is object)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: "@(TempData["SuccessUserDelete"])"
+
+            })
+        </script>
+
+    }
+}
